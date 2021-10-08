@@ -13,8 +13,6 @@ use libraries of different versions, there won't be any conflicts!
 Now to actually import the libraries run `pip install -r requirements.txt.` Note that if `pip` is not recognized, then run `conda install pip` before running `pip install...` 
 
 ---
-
-### Run
-`python sponsor_gen.py` to generate the sponsor list.
-
+### Core Values
+![word_cloud](GHC\word_cloud.PNG)
 
