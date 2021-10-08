@@ -6,6 +6,7 @@
 from bs4 import BeautifulSoup as bs
 import requests
 import csv
+import time
 
 url = 'https://hopin.com/events/vghc-21'
 res = requests.get(url)
@@ -45,12 +46,14 @@ for sponsor in sponsor_list:
         vision = ", ".join(vision)
         vision_list.append(vision)
     except:
-        del sponsor_list[sponsor_list.index(sponsor)]
-        continue
+        vision_list.append("")
+
 
 filename = 'core_values.csv'
 with open(filename, 'w') as f:
     f = csv.writer(f)
+    print(len(sponsor_list),len(vision_list))
+    print(sponsor_list,vision_list)
     for spons, vis in zip(sponsor_list,vision_list):
         pair = [spons, vis]
         f.writerow(pair)
