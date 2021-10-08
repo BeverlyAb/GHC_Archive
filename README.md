@@ -1,4 +1,5 @@
-# GHC Scraper
+# GHC Archive
+Scraper to help understand GHC sponsor values
 ----
 
 ### Environment Setup
