@@ -7,15 +7,15 @@ from bs4 import BeautifulSoup as bs
 import requests
 import csv
 
-# url = 'https://hopin.com/events/vghc-21'
-# res = requests.get(url)
-# soup = bs(res.text,'html.parser')
-# companies= soup.find_all("div",class_="card-content")
+url = 'https://hopin.com/events/vghc-21'
+res = requests.get(url)
+soup = bs(res.text,'html.parser')
+companies= soup.find_all("div",class_="card-content")
 
-# sponsor_list =[]
-# for company in companies:
-#     for name in company.find("h3"): # change bs4.tag to string
-#         sponsor_list.append(str(name))
+sponsor_list =[]
+for company in companies:
+    for name in company.find("h3"): # change bs4.tag to string
+        sponsor_list.append(str(name))
 
 # # write to sponsor_file
 # filename = "sponsor.csv"
@@ -26,7 +26,7 @@ import csv
 #         f.writerow([sponsor])
 
 # gen mission statements
-sponsor_list = ["bank of america", "google"]
+# sponsor_list = ["bank of america", "google"]
 vision_list = []
 for sponsor in sponsor_list:
     url = f'https://mission-statement.com/{sponsor.lower().replace(" ","-")}'
@@ -34,15 +34,18 @@ for sponsor in sponsor_list:
     res = requests.get(url)
     soup = bs(res.content,'html.parser')
     container = soup.find("div", class_="post-single-content box mark-links")
-    vision = [c.text for c in container.find_all("strong")]
     try:
-        exclude = vision.index('Core\nValues')
+        vision = [c.text for c in container.find_all("strong")]
+        try:
+            exclude = vision.index('Core\nValues')
+        except:
+            exclude = vision.index('Core Values')
+        vision = vision[exclude+1:-1]
+        vision = [v.replace('\n', ' ')[:-2] for v in vision]
+        vision = ", ".join(vision)
+        vision_list.append(vision)
     except:
-        exclude = vision.index('Core Values')
-    vision = vision[exclude+1:-1]
-    vision = [v.replace('\n', ' ')[:-2] for v in vision]
-    vision = ", ".join(vision)
-    vision_list.append(vision)
+        continue
 
 filename = 'core_values.csv'
 with open(filename, 'w') as f:
