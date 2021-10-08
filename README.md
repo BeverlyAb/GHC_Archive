@@ -14,4 +14,4 @@ Now to actually import the libraries run `pip install -r requirements.txt.` Note
 
 ---
 ### Core Values
-<img src='GHC/word_cloud.PNG' title='word_cloud' width='' alt='word_cloud' />
+<img src='word_cloud.PNG' title='word_cloud' width='' alt='word_cloud' />
