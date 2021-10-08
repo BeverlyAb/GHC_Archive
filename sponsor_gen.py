@@ -37,6 +37,12 @@ container = soup.find("div", class_="post-single-content box mark-links")
 vision = [c.text for c in container.find_all("strong")]
 exclude = vision.index('Core\nValues')
 vision = vision[exclude+1:-1]
-vision = [v.replace('\n', ' ') for v in vision]
+vision = [v.replace('\n', ' ')[:-2] for v in vision]
+vision = ", ".join(vision)
 print(vision)
 
+filename = 'core_values.csv'
+with open(filename, 'w') as f:
+    f = csv.writer(f)
+    pair = [sponsor, vision]
+    f.writerow(pair)
