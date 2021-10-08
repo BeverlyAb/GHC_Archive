@@ -26,23 +26,27 @@ import csv
 #         f.writerow([sponsor])
 
 # gen mission statements
-
-# for sponsor in sponsor_list[1:2]:
-sponsor = 'bank of america'
-url = f'https://mission-statement.com/{sponsor.lower().replace(" ","-")}'
-print(url)
-res = requests.get(url)
-soup = bs(res.content,'html.parser')
-container = soup.find("div", class_="post-single-content box mark-links")
-vision = [c.text for c in container.find_all("strong")]
-exclude = vision.index('Core\nValues')
-vision = vision[exclude+1:-1]
-vision = [v.replace('\n', ' ')[:-2] for v in vision]
-vision = ", ".join(vision)
-print(vision)
+sponsor_list = ["bank of america", "google"]
+vision_list = []
+for sponsor in sponsor_list:
+    url = f'https://mission-statement.com/{sponsor.lower().replace(" ","-")}'
+    print(url)
+    res = requests.get(url)
+    soup = bs(res.content,'html.parser')
+    container = soup.find("div", class_="post-single-content box mark-links")
+    vision = [c.text for c in container.find_all("strong")]
+    try:
+        exclude = vision.index('Core\nValues')
+    except:
+        exclude = vision.index('Core Values')
+    vision = vision[exclude+1:-1]
+    vision = [v.replace('\n', ' ')[:-2] for v in vision]
+    vision = ", ".join(vision)
+    vision_list.append(vision)
 
 filename = 'core_values.csv'
 with open(filename, 'w') as f:
     f = csv.writer(f)
-    pair = [sponsor, vision]
-    f.writerow(pair)
+    for spons, vis in zip(sponsor_list,vision_list):
+        pair = [spons, vis]
+        f.writerow(pair)
