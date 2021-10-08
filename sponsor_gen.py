@@ -41,10 +41,11 @@ for sponsor in sponsor_list:
         except:
             exclude = vision.index('Core Values')
         vision = vision[exclude+1:-1]
-        vision = [v.replace('\n', ' ')[:-2] for v in vision]
+        vision = [v.replace('\n', ' ')for v in vision]
         vision = ", ".join(vision)
         vision_list.append(vision)
     except:
+        del sponsor_list[sponsor_list.index(sponsor)]
         continue
 
 filename = 'core_values.csv'
